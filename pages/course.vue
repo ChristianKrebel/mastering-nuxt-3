@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-12 bg-gray-100 w-full h-full min-h-screen flex flex-col items-center"
+    class="p-12 bg-emerald-400 w-full h-full min-h-screen flex flex-col items-center"
   >
     <div class="prose mb-12">
       <h1>
@@ -13,15 +13,14 @@
 
     <div class="flex flex-row justify-center flex-grow">
       <div
-        class="prose mr-4 p-8 bg-white rounded-md min-w-[20ch] flex flex-col"
+        class="prose mr-4 p-8 bg-white rounded-3xl min-w-[20ch] flex flex-col"
       >
-        <h3>Chapters</h3>
+        <h3 class="text-xl">Chapters</h3>
         <!-- All the lessons for the course listed here -->
       </div>
 
-      <div class="prose p-12 bg-white rounded-md w-[65ch]">
-        <h2>Lesson</h2>
-        <p>This is a lesson</p>
+      <div class="prose p-12 bg-emerald-50 rounded-3xl w-[65ch]">
+        <NuxtPage />
       </div>
     </div>
   </div>
