@@ -5,7 +5,9 @@
       height="315"
       title="Video player"
       frameborder="0"
-      allowfullscreen>
+      allowfullscreen
+      class="rounded-xl"
+  >
   </iframe>
 </template>
 

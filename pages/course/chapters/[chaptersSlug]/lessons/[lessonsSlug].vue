@@ -1,9 +1,11 @@
 <template>
   <h1 class="text-lg font-black text-emerald-600">{{ chapter.title }}</h1>
   <h2 class="mt-0 text-xxl font-bold">{{ lesson.title }}</h2>
-  <a v-if="lesson.downloadUrl" :href="lesson.downloadUrl">Download</a>
+  <video-player v-if="lesson.videoId" :video-id="lesson.videoId" class="my-4" />
+  <a v-if="lesson.downloadUrl" :href="lesson.downloadUrl">
+    <button class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 hover:bg-orange-200 hover:text-orange-800">Download Video</button>
+  </a>
   <p>{{ lesson.text }}</p>
-  <video-player v-if="lesson.videoId" :video-id="lesson.videoId" />
 </template>
 
 <script setup>
