@@ -13,15 +13,27 @@
 
     <div class="flex flex-row justify-center flex-grow">
       <div
-        class="prose mr-4 p-8 bg-emerald-50 rounded-3xl min-w-[20ch] flex flex-col"
+          class="prose mr-4 p-8 bg-emerald-50 rounded-3xl min-w-[20ch] max-w-[30ch] flex flex-col"
       >
         <h3 class="text-xl">Chapters</h3>
-        <!-- All the lessons for the course listed here -->
+        <template v-for="chapter in chapters" :key="chapter.slug">
+          <h4>{{ chapter.title }}</h4>
+          <template v-for="(lesson, index) in chapter.lessons" :key="lesson.slug">
+            <NuxtLink :to="`/course/chapters/${chapter.slug}/lessons/${lesson.slug}`" class="group -mx-4 py-1 px-4 no-underline hover:bg-white hover:rounded-xl">
+              <span class="text-emerald-600 group-hover:text-emerald-800">{{ `${index + 1}. ` }}</span>
+              <span class="group-hover:text-emerald-900">{{ lesson.title }}</span>
+            </NuxtLink>
+          </template>
+        </template>
       </div>
 
       <div class="prose p-12 bg-white rounded-3xl w-[65ch]">
-        <NuxtPage />
+        <NuxtPage/>
       </div>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+const {chapters} = useCourses()
+</script>
