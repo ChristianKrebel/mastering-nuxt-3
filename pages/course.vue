@@ -19,7 +19,7 @@
         <template v-for="chapter in chapters" :key="chapter.slug">
           <h4>{{ chapter.title }}</h4>
           <template v-for="(lesson, index) in chapter.lessons" :key="lesson.slug">
-            <NuxtLink :to="`/course/chapters/${chapter.slug}/lessons/${lesson.slug}`" class="group -mx-4 py-1 px-4 no-underline hover:bg-white hover:rounded-xl">
+            <NuxtLink :to="lesson.path" class="group -mx-4 py-1 px-4 no-underline hover:bg-white hover:rounded-xl">
               <span class="text-emerald-600 group-hover:text-emerald-800">{{ `${index + 1}. ` }}</span>
               <span class="group-hover:text-emerald-900">{{ lesson.title }}</span>
             </NuxtLink>
