@@ -21,6 +21,11 @@ const chapter = computed(() => {
 const lesson = computed(() => {
   return chapter.value.lessons.find((it) => it.slug === route.params.lessonsSlug)
 })
+
+const title = computed(() => `${lesson.value.title} / ${chapter.value.title} / Mastering Nuxt 3`)
+useHead({
+  title
+})
 </script>
 
 <style scoped>
