@@ -13,7 +13,7 @@
 
     <div class="flex flex-row justify-center flex-grow">
       <div
-          class="prose mr-4 p-8 bg-emerald-50 rounded-3xl min-w-[20ch] max-w-[30ch] flex flex-col"
+          class="prose mr-4 p-10 bg-emerald-50 rounded-3xl min-w-[20ch] max-w-[30ch] flex flex-col"
       >
         <h3 class="text-xl">Chapters</h3>
         <template v-for="chapter in chapters" :key="chapter.slug">
@@ -30,7 +30,7 @@
         </template>
       </div>
 
-      <div class="prose p-12 bg-white rounded-3xl w-[65ch]">
+      <div class="prose p-10 bg-white rounded-3xl ">
         <NuxtPage/>
       </div>
     </div>

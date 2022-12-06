@@ -31,10 +31,25 @@ const lesson = computed(() => {
   return chapter.value.lessons.find((it) => it.slug === route.params.lessonsSlug)
 })
 
-const isLessonCompleted = ref(false)
+const progress = useState("progress", () => ([]))
+
+const isLessonCompleted = computed(() => {
+  if (!progress.value[chapter.value.number - 1]
+      || !progress.value[chapter.value.number - 1][lesson.value.number - 1]) {
+    return false
+  }
+  return progress.value[chapter.value.number - 1][
+  lesson.value.number - 1
+      ]
+})
 
 const toggleCompletion = () => {
-  isLessonCompleted.value = !isLessonCompleted.value
+  if (!progress.value[chapter.value.number - 1]) {
+    progress.value[chapter.value.number - 1] = [];
+  }
+  progress.value[chapter.value.number - 1][
+  lesson.value.number - 1
+      ] = !isLessonCompleted.value;
 }
 
 const title = computed(() => `${lesson.value.title} / ${chapter.value.title} / Mastering Nuxt 3`)
