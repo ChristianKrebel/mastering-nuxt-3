@@ -2,7 +2,7 @@
   <h1 class="text-lg font-black text-emerald-600">{{ chapter.title }}</h1>
   <h2 class="mt-0 text-xxl font-bold">{{ lesson.title }}</h2>
   <video-player v-if="lesson.videoId" :video-id="lesson.videoId" class="my-4"/>
-  <template class="flex justify-between">
+  <div class="flex justify-between">
     <complete-button :is-completed="isLessonCompleted" @update:isCompleted="toggleCompletion"/>
     <div>
       <NuxtLink v-if="lesson.downloadUrl" :to="lesson.downloadUrl">
@@ -20,7 +20,7 @@
         </button>
       </NuxtLink>
     </div>
-  </template>
+  </div>
   <p>{{ lesson.text }}</p>
 </template>
 
@@ -51,9 +51,7 @@ const toggleCompletion = () => {
   if (!progress.value[chapter.value.number - 1]) {
     progress.value[chapter.value.number - 1] = [];
   }
-  progress.value[chapter.value.number - 1][
-  lesson.value.number - 1
-      ] = !isLessonCompleted.value;
+  progress.value[chapter.value.number - 1][lesson.value.number - 1] = !isLessonCompleted.value;
 }
 
 const title = computed(() => `${lesson.value.title} / ${chapter.value.title} / Mastering Nuxt 3`)
