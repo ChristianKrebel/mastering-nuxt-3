@@ -28,11 +28,28 @@
     </div>
 
     <div class="prose p-10 bg-white rounded-3xl ">
-      <NuxtPage/>
+      <NuxtErrorBoundary>
+        <NuxtPage/>
+        <template #error="{ error }">
+          <h3>Something went wrong with the lesson 😿</h3>
+          <code>{{ error.value }}</code><br />
+          <button
+              class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 hover:bg-orange-200 hover:text-orange-800 mt-6"
+              @click="resolveError(error)"
+          >
+            Resolve
+          </button>
+        </template>
+      </NuxtErrorBoundary>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 const {chapters} = useCourses()
+
+const resolveError = async (error: { value: any; }) => {
+  await navigateTo("/")
+  error.value = null
+}
 </script>
