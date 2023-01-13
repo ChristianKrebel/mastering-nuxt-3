@@ -5,7 +5,8 @@
           class="prose p-10 bg-orange-100 text-orange-900 rounded-3xl"
       >
         <h1 class="text-orange-900">😿 {{ error.statusCode }}</h1>
-        <h2 class="-mt-4">An Error occurred.</h2>
+        <h2 class="-mt-4">{{ title }}</h2>
+        <p class="-mt-4">{{ error.message }}</p>
         <button
             class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 mt-4 hover:bg-orange-200 hover:text-orange-800"
             @click="handleError"
@@ -17,8 +18,11 @@
   </div>
 </template>
 <script setup>
-const props = defineProps({
-  error: Object
+const error = useError()
+
+const title = computed(() => {
+  return error.value.statusCode === "404" ? "This page does not exist ..." : "An Error occurred."
 })
+
 const handleError = () => clearError({ redirect: "/" })
 </script>

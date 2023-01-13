@@ -35,6 +35,31 @@ const lesson = computed(() => {
   return chapter.value.lessons.find((it) => it.slug === route.params.lessonsSlug)
 })
 
+definePageMeta({
+  validate({ params }) {
+    // Route validation
+    // Define constants again as compiler macro scope does not include them
+    const courseData = useCourses()
+    const chapter = courseData.chapters.find((it) => it.slug === params.chaptersSlug)
+    if (!chapter) {
+      throw createError({
+        statusCode: 404,
+        message: "Chapter not found."
+      })
+    }
+
+    const lesson = chapter.lessons.find((it) => it.slug === params.lessonsSlug)
+    if (!lesson) {
+      throw createError({
+        statusCode: 404,
+        message: "Lesson not found."
+      })
+    }
+
+    return true
+  }
+})
+
 const progress = useLocalStorage("progress", () => ([]))
 
 const isLessonCompleted = computed(() => {
