@@ -23,6 +23,8 @@
 </template>
 
 <script setup>
+import auth from "~/middleware/auth"
+
 const courseData = useCourses()
 const route = useRoute()
 
@@ -34,28 +36,29 @@ const lesson = computed(() => {
 })
 
 definePageMeta({
-  validate({ params }) {
-    // Route validation
-    // Define constants again as compiler macro scope does not include them
-    const courseData = useCourses()
-    const chapter = courseData.chapters.find((it) => it.slug === params.chaptersSlug)
-    if (!chapter) {
-      throw createError({
-        statusCode: 404,
-        message: "Chapter not found.",
-      })
-    }
+  middleware: [
+    ({ params }) => {
+      // Route validation.
+      // Define constants again as the compiler macro scope does not include them.
+      const courseData = useCourses()
+      const chapter = courseData.chapters.find((it) => it.slug === params.chaptersSlug)
+      if (!chapter) {
+        throw createError({
+          statusCode: 404,
+          message: "Chapter not found.",
+        })
+      }
 
-    const lesson = chapter.lessons.find((it) => it.slug === params.lessonsSlug)
-    if (!lesson) {
-      throw createError({
-        statusCode: 404,
-        message: "Lesson not found.",
-      })
-    }
-
-    return true
-  },
+      const lesson = chapter.lessons.find((it) => it.slug === params.lessonsSlug)
+      if (!lesson) {
+        throw createError({
+          statusCode: 404,
+          message: "Lesson not found.",
+        })
+      }
+    },
+    auth,
+  ],
 })
 
 const progress = useLocalStorage("progress", () => [])
