@@ -1,20 +1,18 @@
 <template>
   <h1 class="text-lg font-black text-emerald-600">{{ chapter.title }}</h1>
   <h2 class="mt-0 text-xxl font-bold">{{ lesson.title }}</h2>
-  <video-player v-if="lesson.videoId" :video-id="lesson.videoId" class="my-4"/>
+  <video-player v-if="lesson.videoId" :video-id="lesson.videoId" class="my-4" />
   <div class="flex justify-between">
-    <complete-button :is-completed="isLessonCompleted" @update:isCompleted="toggleCompletion"/>
+    <complete-button :is-completed="isLessonCompleted" @update:is-completed="toggleCompletion" />
     <div>
       <NuxtLink v-if="lesson.downloadUrl" :to="lesson.downloadUrl">
-        <button
-            class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 hover:bg-orange-200 hover:text-orange-800"
-        >
+        <button class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 hover:bg-orange-200 hover:text-orange-800">
           Download Video
         </button>
       </NuxtLink>
       <NuxtLink v-if="lesson.sourceUrl" :to="lesson.sourceUrl">
         <button
-            class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 ml-4 hover:bg-orange-200 hover:text-orange-800"
+          class="bg-orange-300 text-orange-900 rounded-xl px-4 py-1 ml-4 hover:bg-orange-200 hover:text-orange-800"
         >
           Download Source
         </button>
@@ -44,7 +42,7 @@ definePageMeta({
     if (!chapter) {
       throw createError({
         statusCode: 404,
-        message: "Chapter not found."
+        message: "Chapter not found.",
       })
     }
 
@@ -52,39 +50,34 @@ definePageMeta({
     if (!lesson) {
       throw createError({
         statusCode: 404,
-        message: "Lesson not found."
+        message: "Lesson not found.",
       })
     }
 
     return true
-  }
+  },
 })
 
-const progress = useLocalStorage("progress", () => ([]))
+const progress = useLocalStorage("progress", () => [])
 
 const isLessonCompleted = computed(() => {
-  if (!progress.value[chapter.value.number - 1]
-      || !progress.value[chapter.value.number - 1][lesson.value.number - 1]) {
+  if (!progress.value[chapter.value.number - 1] || !progress.value[chapter.value.number - 1][lesson.value.number - 1]) {
     return false
   }
-  return progress.value[chapter.value.number - 1][
-  lesson.value.number - 1
-      ]
+  return progress.value[chapter.value.number - 1][lesson.value.number - 1]
 })
 
 const toggleCompletion = () => {
   if (!progress.value[chapter.value.number - 1]) {
-    progress.value[chapter.value.number - 1] = [];
+    progress.value[chapter.value.number - 1] = []
   }
-  progress.value[chapter.value.number - 1][lesson.value.number - 1] = !isLessonCompleted.value;
+  progress.value[chapter.value.number - 1][lesson.value.number - 1] = !isLessonCompleted.value
 }
 
 const title = computed(() => `${lesson.value.title} / ${chapter.value.title} / Mastering Nuxt 3`)
 useHead({
-  title
+  title,
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

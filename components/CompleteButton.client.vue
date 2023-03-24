@@ -1,30 +1,30 @@
 <template>
-    <button
-        @click="isLessonCompleted = !isLessonCompleted"
-        class="rounded-xl px-4 py-1 mr-4"
-        :class="isLessonCompleted ? 'completed' : 'notCompleted'"
-    >
-      {{ isLessonCompleted ? "Lesson Completed" : "Complete Lesson" }}
-    </button>
+  <button
+    class="rounded-xl px-4 py-1 mr-4"
+    :class="isLessonCompleted ? 'completed' : 'notCompleted'"
+    @click="isLessonCompleted = !isLessonCompleted"
+  >
+    {{ isLessonCompleted ? "Lesson Completed" : "Complete Lesson" }}
+  </button>
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
   isCompleted: {
     type: Boolean,
-    required: true
-  }
+    required: true,
+  },
 })
 
-const emit = defineEmits(['update:isCompleted'])
+const emit = defineEmits(["update:isCompleted"])
 
 const isLessonCompleted = computed({
   get() {
     return props.isCompleted
   },
   set(value) {
-    emit('update:isCompleted', value)
-  }
+    emit("update:isCompleted", value)
+  },
 })
 </script>
 

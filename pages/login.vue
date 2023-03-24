@@ -14,6 +14,8 @@
 </template>
 
 <script lang="ts" setup>
-const { title } = useCourses();
-const login = () => {};
+const { title } = useCourses()
+const login = () => {
+  console.log("Logged in")
+}
 </script>
