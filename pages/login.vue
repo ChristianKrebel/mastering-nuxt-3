@@ -15,7 +15,15 @@
 
 <script lang="ts" setup>
 const { title } = useCourses()
-const login = () => {
-  console.log("Logged in")
+const sb = useSupabaseClient()
+
+const login = async () => {
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: "github",
+  })
+
+  if (error) {
+    console.error(error)
+  }
 }
 </script>
