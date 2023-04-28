@@ -45,5 +45,7 @@ const logout = async () => {
   if (error) {
     console.error(error)
   }
+
+  await navigateTo("/login")
 }
 </script>
