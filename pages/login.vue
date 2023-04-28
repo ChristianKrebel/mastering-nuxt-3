@@ -16,10 +16,21 @@
 <script lang="ts" setup>
 const { title } = useCourses()
 const sb = useSupabaseClient()
+const user = useSupabaseUser()
+const { query } = useRoute()
+
+/* manual redirect is needed as supabase does redirect to login page (session problem) */
+watchEffect(async () => {
+  if (user.value && query.redirectTo) {
+    await navigateTo(query.redirectTo as string, { replace: true })
+  }
+})
 
 const login = async () => {
+  const redirectTo = `${window.location.origin}${query.redirectTo}`
   const { error } = await sb.auth.signInWithOAuth({
     provider: "github",
+    options: { redirectTo },
   })
 
   if (error) {
