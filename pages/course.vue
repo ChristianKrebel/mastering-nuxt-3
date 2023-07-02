@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-const { chapters } = useCourses()
+const { chapters } = useCourse()
 
 const resolveError = async (error: { value: unknown }) => {
   await navigateTo("/")

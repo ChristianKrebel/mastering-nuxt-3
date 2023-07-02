@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-const { title } = useCourses()
+const { title } = useCourse()
 const sb = useSupabaseClient()
 const user = useSupabaseUser()
 const { query } = useRoute()
