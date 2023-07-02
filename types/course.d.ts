@@ -1,4 +1,4 @@
-type Lesson = {
+export type Lesson = {
   title: string
   slug: string
   number: number
@@ -6,17 +6,20 @@ type Lesson = {
   sourceUrl?: string
   videoId: number
   text: string
+}
+
+export type LessonWithPath = Lesson & {
   path?: string
 }
 
-type Chapter = {
+export type Chapter = {
   title: string
   slug: string
   number: number
-  lessons: Lesson[]
+  lessons: Lesson[] | LessonWithPath[]
 }
 
-type Course = {
+export type Course = {
   title: string
   chapters: Chapter[]
 }

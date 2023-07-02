@@ -1,11 +1,12 @@
+import { Chapter, Lesson, LessonWithPath } from "~/types/course"
 import course from "~/server/courseData"
 
-export default defineEventHandler((event) => {
+export default defineEventHandler((event): LessonWithPath => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { chaptersSlug, lessonsSlug } = event.context.params
 
-  const chapter = course.chapters.find((it) => it.slug === chaptersSlug)
+  const chapter: Option<Chapter> = course.chapters.find((it) => it.slug === chaptersSlug)
   if (!chapter) {
     throw createError({
       statusCode: 404,
@@ -13,7 +14,7 @@ export default defineEventHandler((event) => {
     })
   }
 
-  const lesson = chapter.lessons.find((it) => it.slug === lessonsSlug)
+  const lesson: Option<Lesson> = chapter.lessons.find((it) => it.slug === lessonsSlug)
   if (!lesson) {
     throw createError({
       statusCode: 404,
@@ -21,5 +22,8 @@ export default defineEventHandler((event) => {
     })
   }
 
-  return lesson
+  return {
+    ...lesson,
+    path: `/course/chapters/${chapter.slug}/lessons/${lesson.slug}`,
+  }
 })
