@@ -15,7 +15,7 @@
     <div class="flex flex-row justify-center flex-grow">
       <div class="prose mr-4 p-10 bg-emerald-50 rounded-3xl min-w-[20ch] max-w-[30ch] flex flex-col">
         <h3 class="text-xl">Chapters</h3>
-        <template v-for="chapter in chapters" :key="chapter.slug">
+        <template v-for="chapter in course.chapters" :key="chapter.slug">
           <h4>{{ chapter.title }}</h4>
           <template v-for="(lesson, index) in chapter.lessons" :key="lesson.slug">
             <NuxtLink
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-const { chapters } = useCourse()
+const course = await useCourse()
 
 const resolveError = async (error: { value: unknown }) => {
   await navigateTo("/")

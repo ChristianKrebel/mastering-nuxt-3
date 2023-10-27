@@ -25,11 +25,11 @@
 <script setup>
 import auth from "~/middleware/auth"
 
-const courseData = useCourse()
+const courseData = await useCourse()
 const route = useRoute()
 
 const chapter = computed(() => {
-  return courseData.chapters.find((it) => it.slug === route.params.chaptersSlug)
+  return courseData.value.chapters.find((it) => it.slug === route.params.chaptersSlug)
 })
 
 const { chaptersSlug, lessonsSlug } = route.params
@@ -37,11 +37,11 @@ const lesson = await useLesson(chaptersSlug, lessonsSlug)
 
 definePageMeta({
   middleware: [
-    ({ params }) => {
+    async ({ params }) => {
       // Route validation.
       // Define constants again as the compiler macro scope does not include them.
-      const courseData = useCourse()
-      const chapter = courseData.chapters.find((it) => it.slug === params.chaptersSlug)
+      const courseData = await useCourse()
+      const chapter = courseData.value.chapters.find((it) => it.slug === params.chaptersSlug)
       if (!chapter) {
         throw createError({
           statusCode: 404,

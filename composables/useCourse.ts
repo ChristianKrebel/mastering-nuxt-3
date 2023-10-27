@@ -1,19 +1,3 @@
-import courseData from "./courseData"
-import { Chapter, Course, Lesson, LessonWithPath } from "~/types/course"
+import { CourseMeta } from "~/types/meta"
 
-export const useCourse = (): Course => {
-  const chapters: Chapter[] = courseData.chapters.map((chapter: Chapter) => {
-    const lessons: LessonWithPath[] = chapter.lessons.map((lesson: Lesson) => ({
-      ...lesson,
-      path: `/course/chapters/${chapter.slug}/lessons/${lesson.slug}`,
-    }))
-    return {
-      ...chapter,
-      lessons,
-    }
-  })
-  return {
-    ...courseData,
-    chapters,
-  }
-}
+export default async () => useFetchWithCache<CourseMeta>("/api/course/meta")
