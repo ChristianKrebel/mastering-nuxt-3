@@ -1,5 +1,5 @@
-import { RouteParamValue } from "vue-router"
-import { LessonWithPath } from "~/types/course"
+import type { RouteParamValue } from "vue-router"
+import type { LessonWithPath } from "~/types/course"
 import useFetchWithCache from "~/composables/useFetchWithCache"
 
 export default async (chaptersSlug: string | RouteParamValue[], lessonsSlug: string | RouteParamValue[]) => {

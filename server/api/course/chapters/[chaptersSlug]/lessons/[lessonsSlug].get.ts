@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client"
-import { LessonWithPath } from "~/types/course"
 
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  const { chaptersSlug, lessonsSlug } = event.context.params
+  const { chaptersSlug, lessonsSlug } = event.context.params as { chaptersSlug: string; lessonsSlug: string }
 
   const lesson = await prisma.lesson.findFirst({
     where: {
