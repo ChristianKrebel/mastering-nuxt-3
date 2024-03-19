@@ -21,7 +21,7 @@
             <NuxtLink
               :to="lesson.path"
               :class="{ 'bg-white': lesson.path === $route.fullPath }"
-              class="group -mx-4 mb-1 py-1 px-4 no-underline rounded-xl hover:bg-white"
+              class="cursor-pointer group -mx-4 mb-1 py-1 px-4 no-underline rounded-xl hover:bg-white"
             >
               <span class="text-emerald-600 group-hover:text-emerald-800">{{ `${index + 1}. ` }}</span>
               <span class="group-hover:text-emerald-900">{{ lesson.title }}</span>
