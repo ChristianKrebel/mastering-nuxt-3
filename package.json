@@ -4,6 +4,7 @@
     "seed": "node prisma/seed.mjs"
   },
   "scripts": {
+    "postinstall": "prisma generate",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
