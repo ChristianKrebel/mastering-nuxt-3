@@ -10,7 +10,8 @@ const lessonSelect = Prisma.validator<Prisma.LessonArgs>()({
   },
 })
 
-export type LessonOutline = Prisma.LessonGetPayload<typeof lessonSelect>
+// add path manually
+export type LessonOutline = Prisma.LessonGetPayload<typeof lessonSelect> & { path: string }
 
 // validate the structure and include own modifications like adding the lessons
 const chapterSelect = Prisma.validator<Prisma.ChapterArgs>()({
@@ -22,8 +23,10 @@ const chapterSelect = Prisma.validator<Prisma.ChapterArgs>()({
   },
 })
 
-// generate the type automatically
-export type ChapterOutline = Prisma.ChapterGetPayload<typeof chapterSelect>
+// generate the type automatically with ChapterGetPayload
+export type ChapterOutline = Omit<Prisma.ChapterGetPayload<typeof chapterSelect>, "lessons"> & {
+  lessons: LessonOutline[]
+}
 
 const courseSelect = Prisma.validator<Prisma.CourseArgs>()({
   select: {
@@ -32,8 +35,31 @@ const courseSelect = Prisma.validator<Prisma.CourseArgs>()({
   },
 })
 
-export type CourseOutline = Prisma.CourseGetPayload<typeof courseSelect>
+export type CourseOutline = Omit<Prisma.CourseGetPayload<typeof courseSelect>, "chapters"> & {
+  chapters: ChapterOutline[]
+}
 
-export default defineEventHandler(() => {
-  return prisma.course.findFirst(courseSelect)
+export default defineEventHandler(async (): Promise<CourseOutline> => {
+  const outline = await prisma.course.findFirst(courseSelect)
+
+  if (!outline) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Course not found",
+    })
+  }
+
+  // Add path to each lesson manually
+  const chapters = outline.chapters.map((chapter) => ({
+    ...chapter,
+    lessons: chapter.lessons.map((lesson) => ({
+      ...lesson,
+      path: `/course/chapters/${chapter.slug}/lessons/${lesson.slug}`,
+    })),
+  }))
+
+  return {
+    ...outline,
+    chapters,
+  }
 })
