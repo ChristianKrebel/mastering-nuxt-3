@@ -8,7 +8,7 @@ export const useCourseProgress = defineStore("courseProgress", () => {
     isInitialized.value = true
   }
 
-  const progress = useLocalStorage("progress", {})
+  const progress = ref<any>({})
 
   const toggleComplete = async (chapter: string, lesson: string) => {
     const user = useSupabaseUser()
@@ -28,6 +28,23 @@ export const useCourseProgress = defineStore("courseProgress", () => {
     progress.value[chapter] = {
       ...progress.value[chapter],
       [lesson]: !currentProgress,
+    }
+
+    // Update the DB
+    try {
+      await $fetch(`/api/course/chapters/${chapter}/lessons/${lesson}/progress`, {
+        method: "POST",
+        body: {
+          completed: !currentProgress,
+        },
+      })
+    } catch (error) {
+      console.log(error)
+      // Revert the UI if there is an error
+      progress.value[chapter] = {
+        ...progress.value[chapter],
+        [lesson]: currentProgress,
+      }
     }
   }
 
