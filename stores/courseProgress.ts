@@ -1,14 +1,22 @@
 import { defineStore } from "pinia"
+import type { CourseProgress } from "~/types/course"
 
 export const useCourseProgress = defineStore("courseProgress", () => {
+  const progress = ref<CourseProgress>({})
   const isInitialized = ref(false)
 
   async function initialize() {
     if (isInitialized.value) return
+
+    const { data: userProgress } = await useFetch<CourseProgress>("/api/user/progress", {
+      headers: useRequestHeaders(["cookie"]),
+    })
+    if (userProgress.value) {
+      progress.value = userProgress.value
+    }
+
     isInitialized.value = true
   }
-
-  const progress = ref<any>({})
 
   const toggleComplete = async (chapter: string, lesson: string) => {
     const user = useSupabaseUser()
