@@ -39,7 +39,7 @@
     </ul>
   </section>
   <info-footer />
-  <payment-dialog v-if="showModal" @close="showModal = false" @pay="showModal = false" />
+  <lazy-payment-dialog v-if="showModal" @close="showModal = false" @pay="showModal = false" />
 </template>
 
 <script setup lang="ts">
