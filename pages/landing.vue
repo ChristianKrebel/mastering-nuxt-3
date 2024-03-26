@@ -37,6 +37,7 @@
       </li>
     </ul>
   </section>
+  <info-footer />
 </template>
 
 <script setup lang="ts">
