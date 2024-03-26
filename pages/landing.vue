@@ -16,7 +16,8 @@
         Buy course
       </button>
     </div>
-    <img src="~/assets/course.png" alt="Course Screenshot" class="mt-16 max-w-xl rounded-xl" />
+    <!-- use public dir because of Vercel deployment -->
+    <NuxtImg src="course.png" alt="Course Screenshot" class="mt-16 max-w-xl rounded-xl" />
   </section>
   <section class="flex flex-col items-center justify-center h-screen bg-emerald-500 text-white">
     <h1 class="text-4xl font-bold">So much wow! Good content!</h1>

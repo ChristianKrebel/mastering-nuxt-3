@@ -6,7 +6,10 @@ export default defineNuxtConfig({
       routes: ["/landing"],
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxtjs/supabase", "@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxtjs/supabase", "@pinia/nuxt", "@nuxt/image"],
+  image: {
+    quality: 80,
+  },
   vite: {
     plugins: [eslintPlugin()],
   },
