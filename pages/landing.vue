@@ -38,6 +38,7 @@
     </ul>
   </section>
   <info-footer />
+  <payment-dialog v-if="showModal" @close="showModal = false" @pay="showModal = false" />
 </template>
 
 <script setup lang="ts">
@@ -50,4 +51,6 @@ definePageMeta({
 useHead({
   title: "My Version of Mastering Nuxt 3",
 })
+
+const showModal = ref(false)
 </script>
