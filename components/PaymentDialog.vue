@@ -24,8 +24,12 @@
         <button
           type="submit"
           class="bg-orange-300 text-orange-900 rounded-xl mt-8 px-6 py-2 hover:bg-orange-200 hover:text-orange-800 w-full"
+          :disabled="isProcessingPayment"
         >
-          Pay 123 €
+          <span v-if="isProcessingPayment" class="flex justify-center items-center">
+            <span class="animate-spin rounded-full h-7 w-7 border-t-2 border-b-2 border-orange-900" />
+          </span>
+          <span v-else>Pay 123 €</span>
         </button>
       </form>
     </div>
@@ -33,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-defineEmits(["close", "pay"])
+const emit = defineEmits(["close"])
 
 const config = useRuntimeConfig()
 const stripe = ref(null)
@@ -76,6 +80,7 @@ const handleSubmit = async () => {
 
     if (response.paymentIntent.status === "succeeded") {
       isSuccess.value = true
+      emit("close")
     }
   } catch (e) {
     console.error(e)
