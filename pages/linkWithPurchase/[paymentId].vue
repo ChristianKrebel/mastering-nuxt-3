@@ -8,7 +8,6 @@ const user = useSupabaseUser()
 watch(
   () => user.value,
   async (user) => {
-    console.log(user)
     if (user?.email) {
       const route = useRoute()
       await useFetch(`/api/user/linkWithPurchase/${route.params.paymentId}`, {
