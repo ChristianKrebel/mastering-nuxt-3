@@ -108,7 +108,7 @@ const login = async () => {
     return
   }
   const redirectTo = `/linkWithPurchase/${paymentIntentId.value}`
-  await navigateTo(`/login?=${redirectTo}`)
+  await navigateTo(`/login?redirectTo=${redirectTo}`)
 }
 
 // needed to customize the Stripe Elements
