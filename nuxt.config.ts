@@ -1,6 +1,12 @@
 import eslintPlugin from "vite-plugin-eslint"
 
 export default defineNuxtConfig({
+  runtimeConfig: {
+    stripeSecret: "",
+    public: {
+      stripeKey: "",
+    },
+  },
   nitro: {
     prerender: {
       routes: ["/landing"],
