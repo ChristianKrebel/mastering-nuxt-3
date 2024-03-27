@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
   if (event.context.params?.chaptersSlug !== "1-chapter-1") {
-    protectRoute(event)
+    await protectRoute(event)
   }
 
   const { chaptersSlug, lessonsSlug } = event.context.params as { chaptersSlug: string; lessonsSlug: string }

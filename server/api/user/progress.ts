@@ -5,7 +5,7 @@ import type { ChapterOutline, LessonOutline } from "~/server/api/course/meta.get
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  protectRoute(event)
+  await protectRoute(event)
 
   const {
     user: { email: userEmail },

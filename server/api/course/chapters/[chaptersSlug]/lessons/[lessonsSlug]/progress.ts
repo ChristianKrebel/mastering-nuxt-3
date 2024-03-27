@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   // Allow only these methods
   assertMethod(event, ["PUT", "PATCH", "POST"])
 
-  protectRoute(event)
+  await protectRoute(event)
 
   const { chaptersSlug, lessonsSlug } = event.context.params as { chaptersSlug: string; lessonsSlug: string }
 
