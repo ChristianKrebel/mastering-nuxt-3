@@ -14,7 +14,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return // allow access
   } else if (user.value && !hasAccess.value) {
     try {
-      await useSupabaseClient().auth.signOut()
+      const sb = useSupabaseClient()
+      await sb.auth.signOut()
     } catch (e) {
       console.error(e)
     }
