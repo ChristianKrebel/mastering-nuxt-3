@@ -1,7 +1,21 @@
 <template>
   <modal @close="$emit('close')">
     <div class="prose p-10 bg-white text-emerald-900 rounded-3xl">
-      <form @submit.prevent="handleSubmit">
+      <div v-if="!isSuccess">
+        <h1 class="text-emerald-900">🤗 Thank you</h1>
+        <p class="-mt-4">
+          You cannot really buy here something (Stripe is in test mode), but this would be the message here: Thank you
+          for buying the course! You can now access all chapters and lessons!
+        </p>
+
+        <button
+          class="bg-emerald-300 text-emerald-900 rounded-xl mt-8 px-6 py-2 hover:bg-emerald-200 hover:text-emerald-800 w-full"
+          @click="login"
+        >
+          Log in with GitHub to access
+        </button>
+      </div>
+      <form v-else @submit.prevent="handleSubmit">
         <h1 class="text-emerald-900">💸 Buy the Course</h1>
         <p class="-mt-4">
           This would be the dialog to purchase the course if it was real. Put in your details and pay some amount here.
@@ -37,14 +51,12 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["close"])
+defineEmits(["close"])
 
-const config = useRuntimeConfig()
-const stripe = ref(null)
-const card = ref(null)
 const email = ref("")
 const isProcessingPayment = ref(false)
 const isSuccess = ref(false)
+const paymentIntentId = ref("")
 
 const handleSubmit = async () => {
   if (email.value === "") {
@@ -66,6 +78,9 @@ const handleSubmit = async () => {
     console.error(e)
   }
 
+  const stripe = ref(null)
+  const card = ref(null)
+
   // Then call Stripe's API with the secret
   try {
     const response = await stripe.value?.confirmCardPayment(secret, {
@@ -80,13 +95,21 @@ const handleSubmit = async () => {
 
     if (response.paymentIntent.status === "succeeded") {
       isSuccess.value = true
-      emit("close")
+      paymentIntentId.value = response.paymentIntent.id
     }
   } catch (e) {
     console.error(e)
   } finally {
     isProcessingPayment.value = false
   }
+}
+
+const login = async () => {
+  if (!paymentIntentId.value) {
+    return
+  }
+  const redirectTo = `/linkWithPurchase/${paymentIntentId.value}`
+  await navigateTo(`/login?=${redirectTo}`)
 }
 
 // needed to customize the Stripe Elements
@@ -101,6 +124,7 @@ const formStyle = {
   },
 }
 
+const config = useRuntimeConfig()
 const elements = computed(() => stripe.value?.elements())
 
 // has to be on top of useHead
