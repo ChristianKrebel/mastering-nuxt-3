@@ -5,14 +5,18 @@
 
 const user = useSupabaseUser()
 
-watchEffect(async () => {
-  if (user.value) {
-    const route = useRoute()
-    await useFetch(`/api/user/linkWithPurchase/${route.params.paymentId}`, {
-      headers: useRequestHeaders(["cookie"]),
-    })
-  }
+watch(
+  () => user.value,
+  async (user) => {
+    console.log(user)
+    if (user?.email) {
+      const route = useRoute()
+      await useFetch(`/api/user/linkWithPurchase/${route.params.paymentId}`, {
+        headers: useRequestHeaders(["cookie"]),
+      })
+    }
 
-  await navigateTo("/", { replace: true })
-})
+    await navigateTo("/", { replace: true })
+  }
+)
 </script>
