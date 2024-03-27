@@ -1,7 +1,7 @@
 <template>
   <modal @close="$emit('close')">
     <div class="prose p-10 bg-white text-emerald-900 rounded-3xl">
-      <div v-if="!isSuccess">
+      <div v-if="isSuccess">
         <h1 class="text-emerald-900">🤗 Thank you</h1>
         <p class="-mt-4">
           You cannot really buy here something (Stripe is in test mode), but this would be the message here: Thank you
