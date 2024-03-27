@@ -4,10 +4,21 @@ export default defineNuxtRouteMiddleware(async (to) => {
     headers: useRequestHeaders(["cookie"]),
   })
 
-  if (hasAccess.value || to.params.chaptersSlug === "1-chapter-1") {
+  if (
+    hasAccess.value ||
+    to.params.chaptersSlug === "1-chapter-1" ||
+    to.path === "/" ||
+    to.path.includes("/landing") ||
+    to.path.includes("/login")
+  ) {
     return // allow access
   } else if (user.value && !hasAccess.value) {
-    await useSupabaseClient().auth.signOut()
+    try {
+      await useSupabaseClient().auth.signOut()
+    } catch (e) {
+      console.error(e)
+    }
+    return navigateTo(`/landing`)
   }
 
   return navigateTo(`/login?redirectTo=${to.path}`)
