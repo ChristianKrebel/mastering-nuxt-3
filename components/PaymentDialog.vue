@@ -57,6 +57,8 @@ const email = ref("")
 const isProcessingPayment = ref(false)
 const isSuccess = ref(false)
 const paymentIntentId = ref("")
+const stripe = ref(null)
+const card = ref(null)
 
 const handleSubmit = async () => {
   if (email.value === "") {
@@ -77,9 +79,6 @@ const handleSubmit = async () => {
   } catch (e) {
     console.error(e)
   }
-
-  const stripe = ref(null)
-  const card = ref(null)
 
   // Then call Stripe's API with the secret
   try {
